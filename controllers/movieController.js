@@ -1,7 +1,7 @@
 const connection = require('../data/db.js');
 
 function index(_, res) {
-    const sql = 'SELECT * FROM posts';
+    const sql = 'SELECT * FROM movies';
 
     connection.query(sql, (err, results) => {
         if (err)
@@ -13,7 +13,7 @@ function index(_, res) {
 function show(req, res) {
     const id = req.params.id;
     console.log(id);
-    const sql = 'SELECT * FROM posts WHERE id = ?';
+    const sql = 'SELECT * FROM movies WHERE id = ?';
     connection.query(sql, [id], (err, results) => {
         if (err)
             return res.status(500).json({ error: 'Database query failed' });

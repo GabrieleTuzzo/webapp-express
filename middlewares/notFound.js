@@ -1,4 +1,4 @@
-function notFound(_, _, res) {
+function notFound(_, res, _) {
     res.status(404).json({
         error: 'Not found',
         message: 'Page not found',

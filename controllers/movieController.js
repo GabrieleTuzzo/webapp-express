@@ -33,4 +33,24 @@ function show(req, res) {
     });
 }
 
-module.exports = { index, show };
+function storeReview(req, res) {
+    const id = req.params.id;
+    const body = req.body;
+    const sql =
+        'INSERT INTO reviews (movie_id, name, vote, text) VALUES (?, ?, ?, ?)';
+    connection.query(
+        sql,
+        [id, body.name, body.vote, body.text],
+        (err, result) => {
+            if (err) {
+                res.status(500).json({ error: 'Database query failed' });
+            }
+            res.status(201).json({
+                message: 'Review added successfully',
+                id: result.insertId,
+            });
+        }
+    );
+}
+
+module.exports = { index, show, storeReview };

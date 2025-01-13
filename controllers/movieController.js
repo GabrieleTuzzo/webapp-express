@@ -27,9 +27,19 @@ function show(req, res) {
         if (results.length === 0) {
             res.status(404).json({ error: 'Movie not found' });
         }
-        results[0].image = `/movies_cover/${results[0].image}`;
 
-        res.json(results[0]);
+        const movie = results[0];
+        movie.image = `/movies_cover/${movie.image}`;
+
+        const sql = `SELECT * FROM reviews WHERE movie_id = ?`;
+        connection.query(sql, [id], (err, results) => {
+            if (err) {
+                res.status(500).json({ message: err.message });
+            }
+
+            movie.reviews = results;
+            res.json(movie);
+        });
     });
 }
 
